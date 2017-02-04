@@ -14,17 +14,27 @@ class GuildworkInteract(object):
         self.domain = domain
         self.guildwork_url = 'http://%s' % domain
 
-    def login(self):
+
+    def login(self, user, password):
+        """Logs into a Guildwork page and initializes the webdriver for this class
+        Args:
+            User - email address
+            Password
+
+        Returns:
+            None
+        """
         login_page = self.guildwork_url + '/login'
         d = self.driver
         d.get(login_page)
         elem = d.find_element_by_name('email')
         elem.clear()
-        elem.send_keys(EMAIL)
+        elem.send_keys(user)
         elem = d.find_element_by_name('password')
         elem.clear()
-        elem.send_keys(PASSWORD)
+        elem.send_keys(password)
         elem.send_keys(Keys.RETURN)
+
 
     def scrape_recruitment(self):
         d = self.driver
@@ -59,8 +69,13 @@ class GuildworkInteract(object):
         return all_apps
 
 
-session = GuildworkInteract(DOMAIN)
-session.login()
-session.scrape_recruitment()
+    def print_app_data(self, app_data):
+        for app in app_data:
+            print (app)
 
 
+if __name__ == '__main__':
+    session = GuildworkInteract(DOMAIN)
+    session.login(EMAIL,PASSWORD)
+    data = session.scrape_recruitment()
+    session.print_app_data(data)
