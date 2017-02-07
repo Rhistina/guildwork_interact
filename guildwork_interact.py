@@ -37,6 +37,12 @@ class GuildworkInteract(object):
 
 
     def scrape_recruitment(self):
+        """
+        Scrapes the Guildwork recruitment page application table
+
+        Returns:
+            A list of all dictionaries representing application data
+        """
         d = self.driver
         recruitment_page = self.guildwork_url + '/recruitment'
         d.get(recruitment_page)
@@ -69,13 +75,13 @@ class GuildworkInteract(object):
         return all_apps
 
 
-    def print_app_data(self, app_data):
-        for app in app_data:
-            print (app)
+    def print_items(self, data):
+        for item in data:
+            print (item)
 
 
 if __name__ == '__main__':
     session = GuildworkInteract(DOMAIN)
     session.login(EMAIL,PASSWORD)
     data = session.scrape_recruitment()
-    session.print_app_data(data)
+    session.print_items(data)
